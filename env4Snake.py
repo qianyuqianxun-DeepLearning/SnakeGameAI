@@ -186,7 +186,7 @@ class Snake:
 
     # 画成绩
     def draw_score(self,screen, score):
-        font = pygame.font.Font('myfont.ttf', 30)
+        font = pygame.font.SysFont("SimHei", 30)
         scoreSurf = font.render('得分: %s' % score, True, self.black)
         scoreRect = scoreSurf.get_rect()
         scoreRect.topleft = (self.windows_width - 120, 10)

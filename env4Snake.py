@@ -208,8 +208,8 @@ class Snake:
                                         transforms.ToTensor(),
                                         ])
         img_tensor = transform(img)
-        # new_img_PIL = transforms.ToPILImage()(img_tensor).convert('RGB')
-        # new_img_PIL.show()  # 处理后的PIL图片
+        new_img_PIL = transforms.ToPILImage()(img_tensor).convert('RGB')
+        new_img_PIL.show()  # 处理后的PIL图片
 
         return img_tensor
 

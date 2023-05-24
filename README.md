@@ -1,4 +1,4 @@
-# DRL4SnakeGame
+# SnakeGameAI
 
  Using deep reinforcement learning to play Snake game(贪吃蛇).
 

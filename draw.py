@@ -24,18 +24,22 @@ class Painter:
             else:
                 print("==不存在{}下的文件，Painter已经自动创建该csv。".format(self.load_dir))
                 self.data = pd.DataFrame(columns=['episode reward', 'episode', 'Method'])
+
         self.xlabel = None
         self.ylabel = None
         self.title = None
         self.hue_order = None
 
-    def setXlabel(self,label): self.xlabel = label
+    def setXlabel(self, label):
+        self.xlabel = label
 
-    def setYlabel(self, label): self.ylabel = label
+    def setYlabel(self, label):
+        self.ylabel = label
 
-    def setTitle(self, label): self.title = label
+    def setTitle(self, label):
+        self.title = label
 
-    def setHueOrder(self,order):
+    def setHueOrder(self, order):
         """设置成['name1','name2'...]形式"""
         self.hue_order = order
 
@@ -52,6 +56,7 @@ class Painter:
                 dataToAppend = {'episode reward':dataSeries[i],'episode':x[i],'Method':method}
             else:
                 dataToAppend = {'episode reward':dataSeries[i],'episode':i+1,'Method':method}
+
             self.data = self.data.append(dataToAppend,ignore_index = True)
 
     def drawFigure(self,style="darkgrid"):

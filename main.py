@@ -27,6 +27,8 @@ def testAgent(test_env, agent, episode):
     return ep_reward
 
 if __name__ == "__main__":
+
+    #初始化超参数
     env = Snake()
     test_env = Snake()
     act_dim = 4
@@ -35,8 +37,11 @@ if __name__ == "__main__":
     agent.init(512, obs_dim, act_dim, if_use_gae=True)
     agent.state = env.reset()
     buffer = ReplayBuffer(2**12, obs_dim, act_dim, True)
+
+    #设定训练迭代的轮数以及数据的批量大小
     MAX_EPISODE = 200
     batch_size = 64
+
     rewardList = []
     maxReward = -np.inf
 
@@ -45,15 +50,20 @@ if __name__ == "__main__":
 
     for episode in range(MAX_EPISODE):
 
+        # 进行强化学习模型的训练
         with torch.no_grad():
             trajectory_list = agent.explore_env(env, 2**12, 1, 0.99)
 
+        # 反馈数据存入buffer缓存中
         buffer.extend_buffer_from_list(trajectory_list)
 
+        # 根据缓存中的反馈数据更新网络结构
         agent.update_net(buffer, batch_size, 1, 2**-8)
 
+        # 测试模型的代理获得贪吃蛇的得分
         ep_reward = testAgent(test_env, agent, episode)
 
+        # 打印训练过程的信息
         print('Episode:', episode, 'Reward:%f' % ep_reward)
 
         rewardList.append(ep_reward)

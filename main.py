@@ -44,14 +44,19 @@ if __name__ == "__main__":
     rewardArray = []  # 存储rewards得分
 
     for episode in range(MAX_EPISODE):
+
         with torch.no_grad():
             trajectory_list = agent.explore_env(env, 2**12, 1, 0.99)
-        buffer.extend_buffer_from_list(trajectory_list)
-        agent.update_net(buffer, batch_size, 1, 2**-8)
-        ep_reward = testAgent(test_env, agent, episode)
-        print('Episode:', episode, 'Reward:%f' % ep_reward)
-        rewardList.append(ep_reward)
 
+        buffer.extend_buffer_from_list(trajectory_list)
+
+        agent.update_net(buffer, batch_size, 1, 2**-8)
+
+        ep_reward = testAgent(test_env, agent, episode)
+
+        print('Episode:', episode, 'Reward:%f' % ep_reward)
+
+        rewardList.append(ep_reward)
         episodeList.append(episode)
         rewardArray.append(ep_reward)
 
@@ -59,6 +64,7 @@ if __name__ == "__main__":
             maxReward = ep_reward
             print('保存模型！')
             torch.save(agent.act.state_dict(), 'model_weights/act_weight.pkl')
+
     pygame.quit()
 
     painter = Painter(load_csv=True, load_dir='reward.csv')

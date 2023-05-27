@@ -220,13 +220,17 @@ if __name__ == "__main__":
     env.snake_speed = 10
     agent = AgentDiscretePPO()
     agent.init(512,6,4)
+
+    # 加载强化学习的训练模型
     agent.act.load_state_dict(torch.load('model_weights/act_weight.pkl'))
-    for _ in range(15):
+
+    # 设置贪吃蛇复活次数
+    lifes = 10
+    for _ in range(lifes):
         o = env.reset()
-        # for _ in range(500):
         while 1:
             env.render()
-            for event in pygame.event.get(): # 不加这句render要卡，不清楚原因
+            for event in pygame.event.get():
                 pass
             a,_ = agent.select_action(o)
             o2,r,d,_ = env.step(a)
